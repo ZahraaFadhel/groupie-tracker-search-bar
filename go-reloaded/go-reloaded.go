@@ -33,6 +33,7 @@ func main() {
 			NumberConv(i-1, 2)
 		} else if arr[i] == "(up)" {
 			toUpper(i - 1)
+			remove(i)
 		} else if arr[i] == "(up," && strings.HasSuffix(arr[i+1], ")") {
 			ans := arr[i] + " " + arr[i+1]
 			num := getNum(ans)
@@ -50,6 +51,7 @@ func main() {
 			remove(i)
 		} else if arr[i] == "(cap)" {
 			cap(i - 1)
+			remove(i)
 		} else if arr[i] == "(cap," && strings.HasSuffix(arr[i+1], ")") {
 			ans := arr[i] + " " + arr[i+1]
 			num := getNum(ans)
@@ -58,7 +60,9 @@ func main() {
 			remove(i)
 		} else {
 			adjustPunctuation(i)
-		} 
+			AdjustQuot(i)
+			AdjustVowels(i)
+		}
 	}
 
 	result, err := os.Create(os.Args[2])
@@ -66,6 +70,38 @@ func main() {
 		result.Write([]byte(arr[i] + " "))
 	}
 
+}
+
+func AdjustVowels(index int){
+	if arr[index] == "a" || arr[index] == "A" {
+		if startsWithVowel(arr[index+1]) {
+			arr[index] = arr[index] + "n"
+		}
+	}
+}
+
+func startsWithVowel(s string) bool {
+	vowels := []string{"a", "e", "i", "o", "u", "h"}
+	for _, ch := range vowels {
+		if strings.HasPrefix(s, ch){
+			return true
+		}
+	}
+	return false
+}
+
+func AdjustQuot(index int){ // should it handle 'Hello ' cases?
+	if arr[index] == "'" && len(arr)-1>index+1{
+		arr[index+1] = arr[index] + arr[index+1]
+		remove(index)
+		for i:=index; i<len(arr); i++ {
+			if arr[i] == "'" {
+				arr[i-1] = arr[i-1] + arr[i]
+				remove(i)
+				break
+			}
+		}
+	}
 }
 
 func adjustPunctuation(index int) {
@@ -83,11 +119,16 @@ func adjustPunctuation(index int) {
 			}
 		}
 
-		// Add the non-punctuation characters to the previous word
+		if nonPuncIndex == 0 {
+			arr[index-1] = arr[index-1] + arr[index]
+			remove(index)
+		} else {
+			// Add the non-punctuation characters to the previous word
 		arr[index-1] = string(append([]byte(arr[index-1]), []byte(string(runes[:nonPuncIndex]))...))
 
 		// Remove the punctuation characters from the current word
 		arr[index] = string(runes[nonPuncIndex:])
+		}
 	}
 }
 
@@ -97,11 +138,11 @@ func isPunc(s string) bool {
 
 func checkPrefixes(s string) bool {
 	return strings.HasPrefix(s, ",") ||
-	strings.HasPrefix(s, ".") ||
-	strings.HasPrefix(s, ";") ||
-	strings.HasPrefix(s, ":") ||
-	strings.HasPrefix(s, "!") ||
-	strings.HasPrefix(s, "?")
+		strings.HasPrefix(s, ".") ||
+		strings.HasPrefix(s, ";") ||
+		strings.HasPrefix(s, ":") ||
+		strings.HasPrefix(s, "!") ||
+		strings.HasPrefix(s, "?")
 }
 
 func removeCharAtIndex(str string, index int) string {
