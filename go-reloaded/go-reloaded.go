@@ -9,6 +9,7 @@ import (
 
 var (
 	arr []string
+	size int
 )
 
 func main() {
@@ -25,8 +26,9 @@ func main() {
 	}
 	contentStr := string(content)
 	arr = strings.Fields(contentStr) // split string based on spaces, \t and \n
+	size = len(arr)
 
-	for i := 0; i < len(arr); i++ {
+	for i := 0; i < size ; i++ {
 		if arr[i] == "(hex)" {
 			NumberConv(i-1, 16)
 		} else if arr[i] == "(bin)" {
@@ -58,50 +60,17 @@ func main() {
 			repeatCaseConversion(i-1, num, cap)
 			remove(i)
 			remove(i)
-		} else {
+		}
 			adjustPunctuation(i)
 			AdjustQuot(i)
 			AdjustVowels(i)
-		}
 	}
 
 	result, err := os.Create(os.Args[2])
-	for i := 0; i < len(arr); i++ {
+	for i := 0; i < size; i++ {
 		result.Write([]byte(arr[i] + " "))
 	}
 
-}
-
-func AdjustVowels(index int){
-	if arr[index] == "a" || arr[index] == "A" {
-		if startsWithVowel(arr[index+1]) {
-			arr[index] = arr[index] + "n"
-		}
-	}
-}
-
-func startsWithVowel(s string) bool {
-	vowels := []string{"a", "e", "i", "o", "u", "h"}
-	for _, ch := range vowels {
-		if strings.HasPrefix(s, ch){
-			return true
-		}
-	}
-	return false
-}
-
-func AdjustQuot(index int){ // should it handle 'Hello ' cases?
-	if arr[index] == "'" && len(arr)-1>index+1{
-		arr[index+1] = arr[index] + arr[index+1]
-		remove(index)
-		for i:=index; i<len(arr); i++ {
-			if arr[i] == "'" {
-				arr[i-1] = arr[i-1] + arr[i]
-				remove(i)
-				break
-			}
-		}
-	}
 }
 
 func adjustPunctuation(index int) {
@@ -124,10 +93,61 @@ func adjustPunctuation(index int) {
 			remove(index)
 		} else {
 			// Add the non-punctuation characters to the previous word
-		arr[index-1] = string(append([]byte(arr[index-1]), []byte(string(runes[:nonPuncIndex]))...))
+			arr[index-1] = string(append([]byte(arr[index-1]), []byte(string(runes[:nonPuncIndex]))...))
 
-		// Remove the punctuation characters from the current word
-		arr[index] = string(runes[nonPuncIndex:])
+			// Remove the punctuation characters from the current word
+			arr[index] = string(runes[nonPuncIndex:])
+		}
+	}
+}
+
+func AdjustVowels(index int) {
+	if size == index {
+		return
+	}
+	if arr[index] == "a" || arr[index] == "A" {
+		if startsWithVowel(arr[index+1]) {
+			arr[index] = arr[index] + "n"
+		}
+	}
+}
+
+func startsWithVowel(s string) bool {
+	vowels := []string{"a", "e", "i", "o", "u", "h"}
+	for _, ch := range vowels {
+		if strings.HasPrefix(s, ch) {
+			return true
+		}
+	}
+	return false
+}
+
+func AdjustQuot(index int) {
+	if size == index {
+		return
+	}
+	if strings.HasPrefix(arr[index], "'") && len(arr[index]) > 1 {
+		for i := index; i < size; i++ {
+			if arr[i] == "'" && size-1 > index+1 {
+				arr[i-1] = arr[i-1] + arr[i]
+				remove(i)
+				return
+			} else if strings.HasSuffix(arr[i], "'") {
+				return
+			}
+		}
+		return
+	} else if arr[index] == "'" && index < size {
+		arr[index+1] = arr[index] + arr[index+1]
+		remove(index)
+		for i := index + 1; i < size; i++ {
+			if arr[i] == "'" {
+				arr[i-1] = arr[i-1] + arr[i]
+				remove(i)
+				break
+			} else if strings.HasSuffix(arr[i], "'") {
+				break
+			}
 		}
 	}
 }
@@ -154,6 +174,7 @@ func removeCharAtIndex(str string, index int) string {
 func remove(index int) {
 	temp := append(arr[:index], arr[index+1:]...)
 	arr = temp
+	size = size-1
 }
 
 func NumberConv(i int, base int) {
