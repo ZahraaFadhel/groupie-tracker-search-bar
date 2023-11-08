@@ -1,17 +1,16 @@
-package main
+// package main
 
-import (
-	// "fmt"
-	// "os"
-	// "strconv"
-	// "strings"
-	// "learn.reboot01.com/git/zfadhel/go-reloaded/convertors"
-)
+// import (
+// 	"fmt"
+// 	"os"
+// 	"strconv"
+// 	"strings"
+// )
 
-var (
-	arr  []string
-	size int
-)
+// var (
+// 	arr  []string
+// 	size int
+// )
 
 // func main() {
 // 	if len(os.Args) != 3 {
@@ -31,41 +30,41 @@ var (
 
 // 	for i := 0; i < size; i++ {
 // 		if arr[i] == "(hex)" {
-// 			NumberConv(i-1, 16, size)
+// 			convertors.NumberConv(i-1, 16, size)
 // 		} else if arr[i] == "(bin)" {
-// 			NumberConv(i-1, 2, size)
+// 			convertors.NumberConv(i-1, 2, size)
 // 		} else if arr[i] == "(up)" {
-// 			toUpper(i - 1, arr)
+// 			convertors.toUpper(i - 1, arr)
 // 			remove(i, arr, size)
 // 		} else if arr[i] == "(up," && strings.HasSuffix(arr[i+1], ")") {
 // 			ans := arr[i] + " " + arr[i+1]
 // 			num := getNum(ans)
-// 			repeatCaseConversion(i-1, num, toUpper, arr)
+// 			repeatCaseConversion(i-1, num, convertors.toUpper, arr)
 // 			remove(i, arr, size)
 // 			remove(i, arr, size)
 // 		} else if arr[i] == "(low)" {
-// 			toLower(i - 1, arr)
+// 			convertors.toLower(i - 1, arr)
 // 			remove(i, arr, size)
 // 		} else if arr[i] == "(low," && strings.HasSuffix(arr[i+1], ")") {
 // 			ans := arr[i] + " " + arr[i+1]
 // 			num := getNum(ans)
-// 			repeatCaseConversion(i-1, num, toLower, arr)
+// 			repeatCaseConversion(i-1, num, convertors.toLower, arr)
 // 			remove(i, arr, size)
 // 			remove(i, arr, size)
 // 		} else if arr[i] == "(cap)" {
-// 			cap(i - 1, arr)
+// 			convertors.cap(i - 1, arr)
 // 			remove(i, arr, size)
 // 		} else if arr[i] == "(cap," && strings.HasSuffix(arr[i+1], ")") {
 // 			ans := arr[i] + " " + arr[i+1]
 // 			num := getNum(ans)
-// 			repeatCaseConversion(i-1, num, cap, arr)
+// 			repeatCaseConversion(i-1, num, convertors.cap, arr)
 // 			remove(i, arr, size)
 // 			remove(i, arr, size)
 // 		}
 	
-// 		adjustPunctuation(i, arr, size)
-// 		AdjustQuot(i, arr, size)
-// 		AdjustVowels(i, arr, size)
+// 		convertors.adjustPunctuation(i, arr, size)
+// 		convertors.AdjustQuot(i, arr, size)
+// 		convertors.AdjustVowels(i, arr, size)
 // 	}
 
 // 	result, err := os.Create(os.Args[2])
