@@ -1,16 +1,16 @@
-package convertors
+package main
 
 import (
 	"strings"
 )
 
-func AdjustVowels(index int, x[]string, size int) {
-	if size == index {
+func AdjustVowels(index int) {
+	if Size == index {
 		return
 	}
-	if x[index] == "a" || x[index] == "A" {
-		if startsWithVowel(x[index+1]) {
-			x[index] = x[index] + "n"
+	if Arr[index] == "a" || Arr[index] == "A" {
+		if startsWithVowel(Arr[index+1]) {
+			Arr[index] = Arr[index] + "n"
 		}
 	}
 }

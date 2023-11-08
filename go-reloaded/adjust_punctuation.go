@@ -1,18 +1,18 @@
-package convertors
+package main
 
 import (
 	"strings"
 )
 
-func AdjustPunctuation(index int, arr []string, size int) {
-	if index == size {
+func AdjustPunctuation(index int) {
+	if index == Size {
 		return
 	}
-	runes := []rune(arr[index])
-	if isPunc(arr[index]) {
-		arr[index-1] = string(append([]byte(arr[index-1]), byte(runes[0])))
-		remove(index, arr, size)
-	} else if checkPrefixes(arr[index]) {
+	runes := []rune(Arr[index])
+	if isPunc(Arr[index]) {
+		Arr[index-1] = string(append([]byte(Arr[index-1]), byte(runes[0])))
+		Remove(index, Arr)
+	} else if checkPrefixes(Arr[index]) {
 		// Find the index of the first non-punctuation character
 		nonPuncIndex := -1
 		for i := 0; i < len(runes); i++ {
@@ -26,26 +26,20 @@ func AdjustPunctuation(index int, arr []string, size int) {
 		}
 
 		if nonPuncIndex == -1 {
-			arr[index-1] = arr[index-1] + arr[index]
-			remove(index, arr, size)
+			Arr[index-1] = Arr[index-1] + Arr[index]
+			Remove(index, Arr)
 		} else {
 			// Add the non-punctuation characters to the previous word
-			arr[index-1] = string(append([]byte(arr[index-1]), []byte(string(runes[:nonPuncIndex]))...))
+			Arr[index-1] = string(append([]byte(Arr[index-1]), []byte(string(runes[:nonPuncIndex]))...))
 
 			// Remove the punctuation characters from the current word
-			arr[index] = string(runes[nonPuncIndex:])
+			Arr[index] = string(runes[nonPuncIndex:])
 		}
 	}
 }
 
 func isPunc(s string) bool {
 	return s == "." || s == "," || s == "!" || s == "?" || s == ":" || s == ";"
-}
-
-func remove(index int, arr []string, size int) {
-	temp := append(arr[:index], arr[index+1:]...)
-	arr = temp
-	size = size - 1
 }
 
 func checkPrefixes(s string) bool {
