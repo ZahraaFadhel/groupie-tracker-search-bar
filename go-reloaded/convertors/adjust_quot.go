@@ -13,7 +13,7 @@ func AdjustQuot(index int, arr []string, size int) {
 	if strings.HasPrefix(arr[index], "'") && len(arr[index]) > 1 {
 		for i := index; i < size; i++ {
 			if arr[i] == "'" && size-1 > index+1 {
-				if !isConverter(arr[i-1][:len(arr[i-1])-1]) {
+				if !IsConverter(arr[i-1][:len(arr[i-1])-1]) {
 					arr[i-1] = arr[i-1] + arr[i]
 					remove(i, arr, size)
 					return
@@ -21,11 +21,11 @@ func AdjustQuot(index int, arr []string, size int) {
 					arr[i-2] = arr[i-2] + "'"
 					remove(i-1, arr, size)
 				}
-			} else if strings.HasSuffix(arr[i], "'") && !isConverter(arr[i][:len(arr[i])-1]) {
+			} else if strings.HasSuffix(arr[i], "'") && !IsConverter(arr[i][:len(arr[i])-1]) {
 				return
-			} else if strings.HasSuffix(arr[i], "'") && isConverter(arr[i][:len(arr[i])-1]) {
+			} else if strings.HasSuffix(arr[i], "'") && IsConverter(arr[i][:len(arr[i])-1]) {
 				arr[i-1] = arr[i-1] + "'"
-				getConv(i,arr)(i-1, arr)
+				GetConv(i,arr)(i-1, arr)
 				remove(i, arr, size)
 			}
 		}
@@ -34,23 +34,23 @@ func AdjustQuot(index int, arr []string, size int) {
 		arr[index+1] = arr[index] + arr[index+1]
 		remove(index, arr, size)
 		for i := index; i < size; i++ {
-			if arr[i] == "'" && !isConverter(arr[i-1]) {
+			if arr[i] == "'" && !IsConverter(arr[i-1]) {
 				arr[i-1] = arr[i-1] + arr[i]
 				remove(i, arr, size)
 				break
-			} else if arr[i] == "'" && isConverter(arr[i-1]) {
+			} else if arr[i] == "'" && IsConverter(arr[i-1]) {
 				arr[i-2] = arr[i-2] + arr[i]
 				remove(i, arr, size)
 			} else if strings.HasSuffix(arr[i], "'") {
-				if !isConverter(arr[i][:len(arr[i])-1]) {
+				if !IsConverter(arr[i][:len(arr[i])-1]) {
 					break
 				} else { // ' suffix to a convertor
 					arr[i-1] = arr[i-1] + "'"
-					if !isNumConvertor(arr[i]) {
-						getConv(i, arr)(i-1, arr)
+					if !IsNumConvertor(arr[i]) {
+						GetConv(i, arr)(i-1, arr)
 						remove(i, arr, size)
 					} else {
-						x := getConv2(i, arr)
+						x := GetConv2(i, arr)
 						if x == ("hex") {
 							NumberConv(i, 16, arr,size)
 						} else if x == ("bin") {
@@ -63,7 +63,7 @@ func AdjustQuot(index int, arr []string, size int) {
 	}
 }
 
-func isConverter(s string) bool {
+func IsConverter(s string) bool {
 	return s == "(cap)" || s == "(up)" || s == "(low)" || s == "(hex)" || s == "(bin)"
 }
 
@@ -83,7 +83,7 @@ func NumberConv(i int, base int, arr []string, size int) {
 	arr[i] = strconv.FormatInt(num, 10) // cannot use string(num)
 }
 
-func getConv2(i int, arr[]string) string {
+func GetConv2(i int, arr[]string) string {
 	if arr[i][:len(arr[i])-1] == "(hex)" {
 		return "(hex)"
 	} else {
@@ -91,31 +91,31 @@ func getConv2(i int, arr[]string) string {
 	}
 }
 
-func getConv(i int, arr[]string) func(int, []string) {
+func GetConv(i int, arr[]string) func(int, []string) {
 	if arr[i][:len(arr[i])-1] == "(up)" {
-		return toUpper
+		return ToUpper
 	} else if arr[i][:len(arr[i])-1] == "(low)" {
-		return toLower
+		return ToLower
 	} else if arr[i][:len(arr[i])-1] == "(cap)" {
-		return cap
+		return Cap
 	} else {
 		return nil
 	}
 }
 
-func toUpper(i int, arr[]string) {
+func ToUpper(i int, arr[]string) {
 	arr[i] = strings.ToUpper(arr[i])
 }
 
-func toLower(i int, arr[]string) {
+func ToLower(i int, arr[]string) {
 	arr[i] = strings.ToLower(arr[i])
 }
 
-func cap(i int, arr[]string) {
+func Cap(i int, arr[]string) {
 	arr[i] = strings.Title(arr[i])
 }
 
-func isLower(s string) bool {
+func IsLower(s string) bool {
 	runes := []rune(s)
 	for i := 0; i < len(s); i++ {
 		if runes[i] >= 0 && runes[i] <= 96 || runes[i] >= 123 {
@@ -125,7 +125,7 @@ func isLower(s string) bool {
 	return true
 }
 
-func isUpper(str string) bool {
+func IsUpper(str string) bool {
 	arrS := []rune(str)
 
 	for i := 0; i < len(arrS); i++ {
@@ -136,7 +136,7 @@ func isUpper(str string) bool {
 	return true
 }
 
-func isAlpha(s string) bool {
+func IsAlpha(s string) bool {
 	runes := []rune(s)
 	for _, ch := range runes {
 		if ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch >= 48 && ch <= 57 {
@@ -147,6 +147,6 @@ func isAlpha(s string) bool {
 	return true
 }
 
-func isNumConvertor(s string) bool {
+func IsNumConvertor(s string) bool {
 	return s == "(hex)" || s == "(bin)"
 }

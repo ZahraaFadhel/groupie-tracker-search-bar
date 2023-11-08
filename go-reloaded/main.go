@@ -5,12 +5,12 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"learn.reboot01.com/git/zfadhel/go-reloaded/go-reloaded"
+	"learn.reboot01.com/git/zfadhel/go-reloaded/convertors"
 )
 
 var (
 	arr  []string
-	size int
+	Size int
 )
 
 func main() {
@@ -27,49 +27,49 @@ func main() {
 	}
 	contentStr := string(content)
 	arr = strings.Fields(contentStr) // split string based on spaces, \t and \n
-	size = len(arr)
+	Size = len(arr)
 
-	for i := 0; i < size; i++ {
+	for i := 0; i < Size; i++ {
 		if arr[i] == "(hex)" {
-			convertors.NumberConv(i-1, 16, size)
+			convertors.NumberConv(i-1, 16, arr, Size)
 		} else if arr[i] == "(bin)" {
-			convertors.NumberConv(i-1, 2, size)
+			convertors.NumberConv(i-1, 2, arr, Size)
 		} else if arr[i] == "(up)" {
-			convertors.toUpper(i - 1, arr)
-			remove(i, arr, size)
+			convertors.ToUpper(i - 1, arr)
+			remove(i, arr, Size)
 		} else if arr[i] == "(up," && strings.HasSuffix(arr[i+1], ")") {
 			ans := arr[i] + " " + arr[i+1]
 			num := getNum(ans)
-			repeatCaseConversion(i-1, num, convertors.toUpper, arr)
-			remove(i, arr, size)
-			remove(i, arr, size)
+			repeatCaseConversion(i-1, num, convertors.ToUpper, arr)
+			remove(i, arr, Size)
+			remove(i, arr, Size)
 		} else if arr[i] == "(low)" {
-			convertors.toLower(i - 1, arr)
-			remove(i, arr, size)
+			convertors.ToLower(i - 1, arr)
+			remove(i, arr, Size)
 		} else if arr[i] == "(low," && strings.HasSuffix(arr[i+1], ")") {
 			ans := arr[i] + " " + arr[i+1]
 			num := getNum(ans)
-			repeatCaseConversion(i-1, num, convertors.toLower, arr)
-			remove(i, arr, size)
-			remove(i, arr, size)
+			repeatCaseConversion(i-1, num, convertors.ToLower, arr)
+			remove(i, arr, Size)
+			remove(i, arr, Size)
 		} else if arr[i] == "(cap)" {
-			convertors.cap(i - 1, arr)
-			remove(i, arr, size)
+			convertors.Cap(i - 1, arr)
+			remove(i, arr, Size)
 		} else if arr[i] == "(cap," && strings.HasSuffix(arr[i+1], ")") {
 			ans := arr[i] + " " + arr[i+1]
 			num := getNum(ans)
-			repeatCaseConversion(i-1, num, convertors.cap, arr)
-			remove(i, arr, size)
-			remove(i, arr, size)
+			repeatCaseConversion(i-1, num, convertors.Cap, arr)
+			remove(i, arr, Size)
+			remove(i, arr, Size)
 		}
 	
-		convertors.adjustPunctuation(i, arr, size)
-		convertors.AdjustQuot(i, arr, size)
-		convertors.AdjustVowels(i, arr, size)
+		convertors.AdjustPunctuation(i, arr, Size)
+		convertors.AdjustQuot(i, arr, Size)
+		convertors.AdjustVowels(i, arr, Size)
 	}
 
 	result, err := os.Create(os.Args[2])
-	for i := 0; i < size; i++ {
+	for i := 0; i < Size; i++ {
 		result.Write([]byte(arr[i] + " "))
 	}
 }
@@ -104,8 +104,8 @@ func getNum(s string) int {
 	return num
 }
 
-func remove(index int, arr[]string, size int) {
+func remove(index int, arr[]string, Size int) {
 	temp := append(arr[:index], arr[index+1:]...)
 	arr = temp
-	size = size - 1
+	Size = Size - 1
 }

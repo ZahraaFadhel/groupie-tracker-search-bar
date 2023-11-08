@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-func adjustPunctuation(index int, arr []string, size int) {
+func AdjustPunctuation(index int, arr []string, size int) {
 	if index == size {
 		return
 	}
