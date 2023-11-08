@@ -17,13 +17,13 @@ func AdjustQuot(index int) {
 					return
 				} else {
 					Arr[i-2] = Arr[i-2] + "'"
-					Remove(i-1)
+					Remove(i - 1)
 				}
 			} else if strings.HasSuffix(Arr[i], "'") && !IsConverter(Arr[i][:len(Arr[i])-1]) {
 				return
 			} else if strings.HasSuffix(Arr[i], "'") && IsConverter(Arr[i][:len(Arr[i])-1]) {
 				Arr[i-1] = Arr[i-1] + "'"
-				GetConv(i,Arr)(i-1)
+				GetConv(i)(i - 1)
 				Remove(i)
 			}
 		}
@@ -32,7 +32,7 @@ func AdjustQuot(index int) {
 		Arr[index+1] = Arr[index] + Arr[index+1]
 		Remove(index)
 		for i := index; i < Size; i++ {
-			if Arr[i] == "'" && !IsConverter(Arr[i-1]) {
+			if Arr[i] == "'" && !IsConverter(Arr[i-1])  {
 				Arr[i-1] = Arr[i-1] + Arr[i]
 				Remove(i)
 				break
@@ -44,11 +44,11 @@ func AdjustQuot(index int) {
 					break
 				} else { // ' suffix to a convertor
 					Arr[i-1] = Arr[i-1] + "'"
-					if !IsNumConvertor(Arr[i][:len(Arr[i])-1]) {
-						GetConv(i, Arr)(i-1)
+					if !IsNumConvertor(Arr[i][:len(Arr[i])-1]) { // up, low, cap
+						GetConv(i)(i - 1)
 						Remove(i)
 					} else {
-						x := GetConv2(i)
+						x := GetConvHB(i)
 						if x == ("(hex)") {
 							NumberConv(i-1, 16)
 							Arr[i-1] = "'" + Arr[i-1] + "'"
@@ -67,7 +67,8 @@ func IsConverter(s string) bool {
 	return s == "(cap)" || s == "(up)" || s == "(low)" || s == "(hex)" || s == "(bin)"
 }
 
-func GetConv2(i int) string {
+
+func GetConvHB(i int) string {
 	if Arr[i][:len(Arr[i])-1] == "(hex)" {
 		return "(hex)"
 	} else {
@@ -75,7 +76,7 @@ func GetConv2(i int) string {
 	}
 }
 
-func GetConv(i int, Arr[]string) func(int) {
+func GetConv(i int) func(int) {
 	if Arr[i][:len(Arr[i])-1] == "(up)" {
 		return ToUpper
 	} else if Arr[i][:len(Arr[i])-1] == "(low)" {
@@ -86,4 +87,3 @@ func GetConv(i int, Arr[]string) func(int) {
 		return nil
 	}
 }
-
