@@ -11,7 +11,7 @@ func AdjustPunctuation(index int) {
 	runes := []rune(Arr[index])
 	if isPunc(Arr[index]) {
 		Arr[index-1] = string(append([]byte(Arr[index-1]), byte(runes[0])))
-		Remove(index, Arr)
+		Remove(index)
 	} else if checkPrefixes(Arr[index]) {
 		// Find the index of the first non-punctuation character
 		nonPuncIndex := -1
@@ -27,7 +27,7 @@ func AdjustPunctuation(index int) {
 
 		if nonPuncIndex == -1 {
 			Arr[index-1] = Arr[index-1] + Arr[index]
-			Remove(index, Arr)
+			Remove(index)
 		} else {
 			// Add the non-punctuation characters to the previous word
 			Arr[index-1] = string(append([]byte(Arr[index-1]), []byte(string(runes[:nonPuncIndex]))...))

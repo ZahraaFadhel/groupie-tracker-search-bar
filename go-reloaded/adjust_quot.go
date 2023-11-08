@@ -13,46 +13,48 @@ func AdjustQuot(index int) {
 			if Arr[i] == "'" && Size-1 > index+1 {
 				if !IsConverter(Arr[i-1][:len(Arr[i-1])-1]) {
 					Arr[i-1] = Arr[i-1] + Arr[i]
-					Remove(i, Arr)
+					Remove(i)
 					return
 				} else {
 					Arr[i-2] = Arr[i-2] + "'"
-					Remove(i-1, Arr)
+					Remove(i-1)
 				}
 			} else if strings.HasSuffix(Arr[i], "'") && !IsConverter(Arr[i][:len(Arr[i])-1]) {
 				return
 			} else if strings.HasSuffix(Arr[i], "'") && IsConverter(Arr[i][:len(Arr[i])-1]) {
 				Arr[i-1] = Arr[i-1] + "'"
 				GetConv(i,Arr)(i-1)
-				Remove(i, Arr)
+				Remove(i)
 			}
 		}
 		return
 	} else if Arr[index] == "'" && index+1 < Size {
 		Arr[index+1] = Arr[index] + Arr[index+1]
-		Remove(index, Arr)
+		Remove(index)
 		for i := index; i < Size; i++ {
 			if Arr[i] == "'" && !IsConverter(Arr[i-1]) {
 				Arr[i-1] = Arr[i-1] + Arr[i]
-				Remove(i, Arr)
+				Remove(i)
 				break
 			} else if Arr[i] == "'" && IsConverter(Arr[i-1]) {
 				Arr[i-2] = Arr[i-2] + Arr[i]
-				Remove(i, Arr)
+				Remove(i)
 			} else if strings.HasSuffix(Arr[i], "'") {
 				if !IsConverter(Arr[i][:len(Arr[i])-1]) {
 					break
 				} else { // ' suffix to a convertor
 					Arr[i-1] = Arr[i-1] + "'"
-					if !IsNumConvertor(Arr[i]) {
+					if !IsNumConvertor(Arr[i][:len(Arr[i])-1]) {
 						GetConv(i, Arr)(i-1)
-						Remove(i, Arr)
+						Remove(i)
 					} else {
-						x := GetConv2(i, Arr)
-						if x == ("hex") {
-							NumberConv(i, 16)
-						} else if x == ("bin") {
-							NumberConv(i, 2)
+						x := GetConv2(i)
+						if x == ("(hex)") {
+							NumberConv(i-1, 16)
+							Arr[i-1] = "'" + Arr[i-1] + "'"
+						} else if x == ("(bin)") {
+							NumberConv(i-1, 2)
+							Arr[i-1] = "'" + Arr[i-1] + "'"
 						}
 					}
 				}
@@ -65,7 +67,7 @@ func IsConverter(s string) bool {
 	return s == "(cap)" || s == "(up)" || s == "(low)" || s == "(hex)" || s == "(bin)"
 }
 
-func GetConv2(i int, Arr[]string) string {
+func GetConv2(i int) string {
 	if Arr[i][:len(Arr[i])-1] == "(hex)" {
 		return "(hex)"
 	} else {
@@ -85,50 +87,3 @@ func GetConv(i int, Arr[]string) func(int) {
 	}
 }
 
-func ToUpper(i int) {
-	Arr[i] = strings.ToUpper(Arr[i])
-}
-
-func ToLower(i int) {
-	Arr[i] = strings.ToLower(Arr[i])
-}
-
-func Cap(i int) {
-	Arr[i] = strings.Title(Arr[i])
-}
-
-func IsLower(s string) bool {
-	runes := []rune(s)
-	for i := 0; i < len(s); i++ {
-		if runes[i] >= 0 && runes[i] <= 96 || runes[i] >= 123 {
-			return false
-		}
-	}
-	return true
-}
-
-func IsUpper(str string) bool {
-	ArrS := []rune(str)
-
-	for i := 0; i < len(ArrS); i++ {
-		if (ArrS[i] >= 0) && (ArrS[i] <= 64) || (ArrS[i] >= 91) && (ArrS[i] <= 127) {
-			return false
-		}
-	}
-	return true
-}
-
-func IsAlpha(s string) bool {
-	runes := []rune(s)
-	for _, ch := range runes {
-		if ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch >= 48 && ch <= 57 {
-			continue
-		}
-		return false
-	}
-	return true
-}
-
-func IsNumConvertor(s string) bool {
-	return s == "(hex)" || s == "(bin)"
-}

@@ -16,7 +16,7 @@ func AdjustVowels(index int) {
 }
 
 func startsWithVowel(s string) bool {
-	vowels := []string{"a", "e", "i", "o", "u", "h"}
+	vowels := []string{"a", "e", "i", "o", "u", "h", "A", "O", "E", "I", "U", "H"}
 	for _, ch := range vowels {
 		if strings.HasPrefix(s, ch) {
 			return true

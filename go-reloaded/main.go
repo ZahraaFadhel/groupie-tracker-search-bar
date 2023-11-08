@@ -34,31 +34,31 @@ func main() {
 			NumberConv(i-1, 2)
 		} else if Arr[i] == "(up)" {
 			ToUpper(i - 1)
-			Remove(i, Arr)
+			Remove(i)
 		} else if Arr[i] == "(up," && strings.HasSuffix(Arr[i+1], ")") {
 			ans := Arr[i] + " " + Arr[i+1]
 			num := GetNum(ans)
 			RepeatCaseConversion(i-1, num, ToUpper)
-			Remove(i, Arr)
-			Remove(i, Arr)
+			Remove(i)
+			Remove(i)
 		} else if Arr[i] == "(low)" {
 			ToLower(i - 1)
-			Remove(i, Arr)
+			Remove(i)
 		} else if Arr[i] == "(low," && strings.HasSuffix(Arr[i+1], ")") {
 			ans := Arr[i] + " " + Arr[i+1]
 			num := GetNum(ans)
 			RepeatCaseConversion(i-1, num, ToLower)
-			Remove(i, Arr)
-			Remove(i, Arr)
+			Remove(i)
+			Remove(i)
 		} else if Arr[i] == "(cap)" {
 			Cap(i - 1)
-			Remove(i, Arr)
+			Remove(i)
 		} else if Arr[i] == "(cap," && strings.HasSuffix(Arr[i+1], ")") {
 			ans := Arr[i] + " " + Arr[i+1]
 			num := GetNum(ans)
 			RepeatCaseConversion(i-1, num, Cap)
-			Remove(i, Arr)
-			Remove(i, Arr)
+			Remove(i)
+			Remove(i)
 		}
 		AdjustPunctuation(i)
 		AdjustQuot(i)
