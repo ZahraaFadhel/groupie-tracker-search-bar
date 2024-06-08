@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  justify-content:space-around;
+}
+
+.container div {
+  background-color: aqua;
+  height: 120px;
+  width: 100px;
+}
