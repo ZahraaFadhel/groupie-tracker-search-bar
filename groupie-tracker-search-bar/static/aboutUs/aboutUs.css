@@ -1,0 +1,175 @@
+:root {
+  --OurPurple: #AD88C6;
+  --OurLightPurple: #DDD6F3;
+}
+body, html {
+  background-image: linear-gradient(19deg, #AD88C6 0%, #DDD6F3 80%);  
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0px 0px;
+  height: 100%;
+}
+h1 {
+  font-size: 60px;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  margin-bottom: 70px;
+}
+h2 {
+  color: var(--OurPurple);
+  font-size: 30px;
+  text-align: center;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+h4 {
+  color: var(--OurPurple);
+  font-size: 18px;
+  text-align: center;
+}
+
+.navbar {
+  border-bottom: 10px solid var(--OurPurple); /* This adds a line under the navbar */
+  background-color: var(--OurPurple);
+  padding-right: 15px;
+  padding-left: 15px;
+  /*This is to fix the position of the navbar*/
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+}
+
+.navbar-title {
+  text-align: center;
+  line-height: 60px;
+  color: white;
+  font-family: Cursive, sans-serif;
+  font-size: 45px;
+  margin: 0;
+}
+
+.navbar ul{
+  /* remove bullets */
+  list-style-type: none; 
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+}
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 20px;
+  display: block;
+  text-align: center;
+  transition: background-color 0.4s ease, font-size 0.4s ease;
+  font-size: 23px;
+  width: fit-content;
+  height: 100%;
+}
+.navbar a:hover {
+  color: black;
+  background-color: #d0c8ed;
+  font-size: 25px;
+}
+
+.navbar li {
+  float: left;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  transition: font-size 0.3s ease;
+  margin: 0;
+  height: 100%;
+}
+
+.navbar li:hover {
+  font-size: 18px;
+}
+
+.container {
+  border: 2px solid var(--OurLightPurple);
+  background-color: azure;
+  width: 400px; 
+  height: 300px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.button{
+  margin: 30px;
+  margin-top: 30px;
+  padding: 10px 22px;
+  background-color: var(--OurPurple);
+  border-radius: 6px;
+  border: none;
+  box-shadow: 0 5px 10px rgb(0,0,0, 0.1);
+}
+.button a {
+  color: white;
+  text-decoration-line: none;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px;
+  margin-top: 50px;
+  border-radius:15px;
+  transition: transform 0.2s ease;
+}
+.button a:hover {
+  transform: scale(0.96);
+  font-size: 22px;
+}
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 120px;
+  height: 20px;
+  background: 
+  linear-gradient(#AD88C6 50%,#DDD6F3 0),
+    linear-gradient(#DDD6F3 50%,#AD88C6 0),
+    linear-gradient(#AD88C6 50%,#DDD6F3 0),
+    linear-gradient(#DDD6F3 50%,#AD88C6 0),
+    linear-gradient(#AD88C6 50%,#DDD6F3 0),
+    linear-gradient(#DDD6F3 50%,#AD88C6 0),
+    #ddd;
+  background-size: calc(100%/6 + 1px) 200%;
+  background-repeat: no-repeat;
+  animation: l12 2s infinite;
+}
+
+.box {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+@keyframes l12 {
+  0%     {background-position: calc(0*100%/5) 100%,calc(1*100%/5)   0%,calc(2*100%/5) 100%,calc(3*100%/5)   0%,calc(4*100%/5) 100%,calc(5*100%/5)   0%}
+  16.67% {background-position: calc(0*100%/5)   0%,calc(1*100%/5)   0%,calc(2*100%/5) 100%,calc(3*100%/5)   0%,calc(4*100%/5) 100%,calc(5*100%/5)   0%}
+  33.33% {background-position: calc(0*100%/5)   0%,calc(1*100%/5) 100%,calc(2*100%/5) 100%,calc(3*100%/5)   0%,calc(4*100%/5) 100%,calc(5*100%/5)   0%}
+  50%    {background-position: calc(0*100%/5)   0%,calc(1*100%/5) 100%,calc(2*100%/5)   0%,calc(3*100%/5)   0%,calc(4*100%/5) 100%,calc(5*100%/5)   0%}
+  66.67% {background-position: calc(0*100%/5)   0%,calc(1*100%/5) 100%,calc(2*100%/5)   0%,calc(3*100%/5) 100%,calc(4*100%/5) 100%,calc(5*100%/5)   0%}
+  83.33% {background-position: calc(0*100%/5)   0%,calc(1*100%/5) 100%,calc(2*100%/5)   0%,calc(3*100%/5) 100%,calc(4*100%/5)   0%,calc(5*100%/5)   0%}
+  100%   {background-position: calc(0*100%/5)   0%,calc(1*100%/5) 100%,calc(2*100%/5)   0%,calc(3*100%/5) 100%,calc(4*100%/5)   0%,calc(5*100%/5) 100%}
+}
+@media (max-width: 700px) {
+  .navbar-title {
+    font-size: 26px;
+  }
+  
+  .navbar a {
+    font-size: 18px;
+  }
+  
+  .navbar a:hover {
+    font-size: 21px;
+  }
+}

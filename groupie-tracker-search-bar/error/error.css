@@ -1,0 +1,53 @@
+body {
+  background-color: #FAACA8;
+  background-image: linear-gradient(19deg, #AD88C6 0%, #DDD6F3 80%); 
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+}
+
+.errorBox {
+  border: solid 8px white;
+  padding: 100px 50px;
+}
+
+.errorBox h1 {
+  text-align: center;
+}
+
+.errorBox p {
+  text-align: center;
+}
+
+.button {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.errorBox .button a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  text-decoration: none;
+  border: 2px solid white;
+  border-radius: 10px;
+  color: white;
+  font-weight: 500;
+  padding: 10px 25px;
+  transition: all 0.3s ease;
+}
+
+.errorBox .button a:hover {
+  color: white;
+  border: 3px solid #7b6491;
+  background: #7b6491;
+  font-size: 18px;
+}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/styleArtists.css" rel="stylesheet">
+    <script src="/search.js" defer></script>
+  </head>
+
+  <body>
+    <nav class="navbar">
+        <h1 class="navbar-title">Groupie Tracker</h1>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li class="dicsover"><a href="#discover"> Discover</a></li>
+          <li><a href="http://localhost:8080/aboutUs">About us</a></li>
+        </ul>
+    </nav>
+
+    <div class="WelcomePage">
+      <h1 class="welcometxt">Discover Artists<br>with Groupie Tracker!</h1>
+      <div class="now playing" id="music">
+        <span class="bar n1">A</span>
+        <span class="bar n2">B</span>
+        <span class="bar n3">c</span>
+        <span class="bar n4">D</span>
+        <span class="bar n5">E</span>
+        <span class="bar n6">F</span>
+        <span class="bar n7">G</span>
+        <span class="bar n8">H</span>
+      </div>
+      <h2 id="welcometxt">This project displays information about various artists, their first album and their concerts</h2>
+      <a href="#discover"><h3 class="discoverwelcome">Click here to discover!!</h3></a> 
+    </div>
+    
+    <div class="search-wrapper">
+      <input type="search" placeholder="Looking for ...">
+    </div>
+
+        <div class="main-container" id="discover">
+          <!-- {{range .}}
+           div for each artist
+              <div id="Discover">  
+                make URL Artist/[id]
+                <a class="ArtLink" href="/artist/{{.Id}}"> 
+                  <img src="{{.Image}}" alt="Click here to go to the Artist page">
+                  <p class="artistName">{{.Name}}</p>
+                </a>
+              </div>
+          {{ end }} -->
+        </div>
+
+  </body>
+</html>

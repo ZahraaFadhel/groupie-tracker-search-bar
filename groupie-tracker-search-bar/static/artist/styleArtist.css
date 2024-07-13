@@ -1,0 +1,166 @@
+:root {
+  --OurPurple: #AD88C6;
+  --OurLightPurple: #DDD6F3;
+}
+
+body, html {
+  background-image: linear-gradient(19deg, #e1a8fa 0%, #ddd6f3 80%);  
+  margin: 0;  
+}
+
+.navbar {
+  background-color: var(--OurPurple);
+  padding-right: 15px;
+  padding-left: 15px;
+  /*This is to fix the position of the navbar*/
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+}
+
+.navbar-title {
+  text-align: center;
+  line-height: 60px;
+  color: white;
+  font-family: Cursive, sans-serif;
+  font-size: 45px;
+  margin: 0;
+}
+
+.navbar ul{
+  /* remove bullets */
+  list-style-type: none; 
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 20px;
+  display: block;
+  text-align: center;
+  transition: background-color 0.4s ease, font-size 0.4s ease;
+  font-size: 23px;
+  width: fit-content;
+  height: 100%;
+}
+
+.navbar li {
+  float: left;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  transition: all 0.3s ease;
+  margin: 0;
+  height: 100%;
+  border-radius: 20px;
+}
+
+.navbar li:hover {
+  font-size: 18px;
+  background-color: #d0c8ed;
+  font-size: 25px;
+}
+
+.navbar a:hover {
+  color: black;
+}
+
+h2 {
+  font-size: 26px;
+}
+
+.artistHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.artistName{
+  text-align: center;
+  font-size: 38px;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+img {
+  border-radius: 50%;
+  box-shadow: 20px 20px 10px gray;
+  margin: 40px 0px;
+}
+
+.container{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.Members,
+.CreationDate,
+.FirstAlbum {
+    flex: 0 1 30%;
+    text-align: center;
+}
+
+.Members ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0; 
+}
+
+div {
+  font-size: 18px;
+  padding: 3px;
+}
+
+.Concerts {
+  text-align: center; /* Center the heading */
+}
+
+.concert-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Adjust as needed */
+}
+
+.concert {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 30%;  /* flex-grow:1 , flex-shrink:0, flex-basis:30% */
+  background-color: #e3cdf4;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px;
+  align-items: center;
+  justify-content: center;
+  border:solid black ;
+}
+
+.loc, .dates {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 700px) {
+  .navbar-title {
+    font-size: 26px;
+  }
+  
+  .navbar a {
+    font-size: 18px;
+  }
+  
+  .navbar a:hover {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 900px) {
+  .WelcomePage {
+      display: none;
+  }
+}
