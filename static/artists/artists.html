@@ -2,11 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/styleArtists.css" rel="stylesheet">
-    <script src="/search.js" defer></script>
   </head>
-
   <body>
     <nav class="navbar">
         <h1 class="navbar-title">Groupie Tracker</h1>
@@ -34,7 +32,15 @@
     </div>
     
     <div class="search-wrapper">
-      <input type="search" placeholder="Looking for ...">
+      <div class="row">
+        <input id="search-input" type="search" placeholder="Looking for ..." autocomplete="on">
+      <div class="result-box">
+        <!-- <ul>
+          <li>Something1</li>
+          <li>Something2</li>
+          <li>Something3</li>
+        </ul> -->
+      </div>
     </div>
 
         <div class="main-container" id="discover">
@@ -50,5 +56,6 @@
           {{ end }} -->
         </div>
 
+      <script src="/search.js" defer></script>
   </body>
 </html>

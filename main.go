@@ -4,7 +4,6 @@ import (
 	"fmt"
 	groupieTracker "groupieTracker/handlers"
 	"net/http"
-	
 )
 
 func main() {
