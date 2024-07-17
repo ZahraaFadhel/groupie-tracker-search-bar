@@ -98,7 +98,6 @@ async function GetArtists() {
     console.error('Error in fetch request:', e);
   }
 }
-
 async function GetLocations(id) {
   try {
     const response = await fetch(`https://groupietrackers.herokuapp.com/api/locations/${id}`);
