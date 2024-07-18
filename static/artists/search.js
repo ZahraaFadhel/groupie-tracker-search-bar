@@ -80,7 +80,6 @@ searchInput.addEventListener("input", (e) => {
     displayArtists(filteredArtists);
   }
 });
-
 async function GetArtists() {
   try {
     const response = await fetch('http://localhost:8080/api/artists');
