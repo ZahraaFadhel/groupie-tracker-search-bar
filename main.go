@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	groupieTracker "groupieTracker/handlers"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -29,6 +29,7 @@ func main() {
 		http.ServeFile(w, r, "static/artists/search.js")
 	})
 
+	// to solve CORS issue
 	http.HandleFunc("/api/artists", fetchArtists)
 	http.HandleFunc("/api/locations/", fetchLocations)
 
@@ -51,7 +52,7 @@ func fetchArtists(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		http.Error(w, "Failed to read response from external API", http.StatusInternalServerError)
 		return
@@ -85,7 +86,7 @@ func fetchLocations(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		http.Error(w, "Failed to read response from external API", http.StatusInternalServerError)
 		return
