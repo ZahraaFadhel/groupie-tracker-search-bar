@@ -60,17 +60,18 @@ img:hover {
 
 .navbar {
   background-color: var(--OurPurple);
-  padding-right: 15px;
-  padding-left: 15px;
-  /*This is to fix the position of the navbar*/
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 999;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 15px;
+  margin-bottom: 50px;
 }
+
 
 .navbar-title {
   text-align: center;
@@ -168,7 +169,7 @@ img:hover {
 
 .playing {
   position: absolute;
-  top: 620px;
+  top: 530px;
   left: 50%;
   width: auto;
   transform: translateX(-50%) translateY(-50%) rotate(180deg);
@@ -176,7 +177,6 @@ img:hover {
 .playing:after {
   display: block;
   width: 100%;
-  margin-top: 10px;
 }
 .now.playing .bar {
   display: inline-block;
@@ -227,7 +227,6 @@ img:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 30px;
 }
 
 .row input {
@@ -322,11 +321,26 @@ img:hover {
   .WelcomePage {
       display: none;
   }
+  .search-wrapper {
+    padding-top: 150px;
+  }
+}
+
+@media (max-width: 800px) {
+  .navbar .discover {
+      display: none;
+  }
+  .search-wrapper {
+    padding-top: 190px;
+  }
 }
 
 @media (max-width: 700px) {
   .navbar .discover {
       display: none;
+  }
+  .search-wrapper {
+    padding-top: 130px;
   }
 }
 
