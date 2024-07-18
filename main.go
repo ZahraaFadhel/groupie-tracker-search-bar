@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	groupieTracker "groupieTracker/handlers"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -13,7 +15,6 @@ func main() {
 
 	http.HandleFunc("/styleArtists.css", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "static/artists/styleArtists.css")
-	
 	})
 	http.HandleFunc("/styleArtist.css", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "static/artist/styleArtist.css")
@@ -26,21 +27,83 @@ func main() {
 	})
 	http.HandleFunc("/search.js", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "static/artists/search.js")
-		// enableCors(&w)
 	})
 
+	http.HandleFunc("/api/artists", fetchArtists)
+	http.HandleFunc("/api/locations/", fetchLocations)
+
 	port := "localhost:8080"
-	fmt.Printf("Server is working on http://" + port + "\n")
-	
+	fmt.Printf("Server is working on http://%s\n", port)
+
 	err := http.ListenAndServe(":8080", nil)
-	if err == nil {
+	if err != nil {
+		fmt.Printf("Failed to start server: %v\n", err)
+	} else {
 		groupieTracker.OpenBrowser("http://localhost:8080")
 	}
 }
 
-// func enableCors(w *http.ResponseWriter) {
-// 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-// 	(*w).Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-// 	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
-// 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-// }
+func fetchArtists(w http.ResponseWriter, r *http.Request) {
+	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
+	if err != nil {
+		http.Error(w, "Failed to reach external API", http.StatusBadGateway)
+		return
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		http.Error(w, "Failed to read response from external API", http.StatusInternalServerError)
+		return
+	}
+
+	var data interface{}
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		http.Error(w, "Failed to parse JSON response from external API", http.StatusInternalServerError)
+		return
+	}
+
+	responseData, err := json.Marshal(data)
+	if err != nil {
+		http.Error(w, "Failed to serialize JSON response", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(responseData)
+}
+
+func fetchLocations(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Path[len("/api/locations/"):]
+	url := fmt.Sprintf("https://groupietrackers.herokuapp.com/api/locations/%s", id)
+
+	resp, err := http.Get(url)
+	if err != nil {
+		http.Error(w, "Failed to reach external API", http.StatusBadGateway)
+		return
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		http.Error(w, "Failed to read response from external API", http.StatusInternalServerError)
+		return
+	}
+
+	var data interface{}
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		http.Error(w, "Failed to parse JSON response from external API", http.StatusInternalServerError)
+		return
+	}
+
+	responseData, err := json.Marshal(data)
+	if err != nil {
+		http.Error(w, "Failed to serialize JSON response", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(responseData)
+}

@@ -83,27 +83,32 @@ searchInput.addEventListener("input", (e) => {
 
 async function GetArtists() {
   try {
-    const response = await fetch('https://groupietrackers.herokuapp.com/api/artists');
+    const response = await fetch('http://localhost:8080/api/artists');
     if (!response.ok) {
+      console.log('HTTP status code:', response.status);
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
     artists = data;
-
+  
     // Fetch location data for each artist
     await Promise.all(artists.map(artist => GetLocations(artist.id)));
-
+  
     displayArtists(artists);
   } catch (e) {
     console.error('Error in fetch request:', e);
   }
+  
 }
+
 async function GetLocations(id) {
   try {
-    const response = await fetch(`https://groupietrackers.herokuapp.com/api/locations/${id}`);
+    const response = await fetch(`http://localhost:8080/api/locations/${id}`);
+    
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
+    
     const data = await response.json();
     locations[id] = data.locations;
   } catch (e) {
